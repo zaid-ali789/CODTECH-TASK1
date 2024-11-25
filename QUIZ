@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Struct to store a question and its options
+struct Question {
+    string questionText;
+    vector<string> options;
+    int correctOption;
+};
+
+void playQuiz(const vector<Question>& questions) {
+    int score = 0;
+
+    cout << "\nWelcome to the Quiz Game!\n";
+    cout << "--------------------------\n";
+
+    // Iterate over the questions
+    for (size_t i = 0; i < questions.size(); i++) {
+        cout << "\nQuestion " << i + 1 << ": " << questions[i].questionText << "\n";
+        
+        // Display options
+        for (size_t j = 0; j < questions[i].options.size(); j++) {
+            cout << j + 1 << ". " << questions[i].options[j] << "\n";
+        }
+
+        int userAnswer;
+        cout << "Enter your choice (1-" << questions[i].options.size() << "): ";
+        cin >> userAnswer;
+
+        // Validate the user's answer
+        if (userAnswer == questions[i].correctOption) {
+            cout << "Correct!\n";
+            score++;
+        } else {
+            cout << "Wrong! The correct answer was: " 
+                 << questions[i].options[questions[i].correctOption - 1] << "\n";
+        }
+    }
+
+    // Display the final score
+    cout << "\n--------------------------\n";
+    cout << "Quiz Over! Your Score: " << score << "/" << questions.size() << "\n";
+
+    if (score == questions.size()) {
+        cout << "Excellent! You got all answers correct!\n";
+    } else if (score > questions.size() / 2) {
+        cout << "Well done! You got more than half correct.\n";
+    } else {
+        cout << "Better luck next time!\n";
+    }
+}
+
+int main() {
+    // Initialize questions
+    vector<Question> questions = {
+        {"What is the capital of France?", {"Paris", "Berlin", "Madrid", "Rome"}, 1},
+        {"Who wrote 'Romeo and Juliet'?", {"William Shakespeare", "Charles Dickens", "J.K. Rowling", "Mark Twain"}, 1},
+        {"What is the largest planet in our solar system?", {"Earth", "Mars", "Jupiter", "Saturn"}, 3},
+        {"What is the value of Pi (approx.)?", {"3.14", "2.71", "1.61", "3.33"}, 1}
+    };
+
+    playQuiz(questions);
+    return 0;
+}
